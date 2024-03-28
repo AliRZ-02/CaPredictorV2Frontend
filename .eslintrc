@@ -1,0 +1,22 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "simple-import-sort"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": { 
+    "no-console": 2,
+    "semi": 2,
+    "multiline-ternary": 2,
+    "no-unexpected-multiline": 2,
+    "indent": 2,
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error"
+  }
+}
