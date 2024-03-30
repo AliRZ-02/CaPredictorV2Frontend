@@ -2,7 +2,6 @@ import axios, { AxiosResponse } from "axios";
 
 import {
     REACT_APP_BASE_URL,
-    REACT_APP_PLAYER_LIST_URL,
     REACT_APP_VALUATION_URL,
 } from "../settings";
 
@@ -58,7 +57,7 @@ export const getPlayerList = async (
 ): Promise<AxiosResponse<PlayerListDataType[]>> => {
     try {
         const playerList: AxiosResponse<PlayerListDataType[]> = await axios.get(
-            `${REACT_APP_PLAYER_LIST_URL}`
+            `${REACT_APP_BASE_URL}/players`
         );
         return playerList;
     } catch (error) {

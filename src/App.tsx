@@ -20,7 +20,7 @@ const App: React.FC = () => {
     const playerInfo = (): void => {
         getPlayerList().then(({ data }) => {
             if (data.length > 0 && data[0]) {
-                data.map((value) => {
+                data = data.map((value) => {
                     value.name = value?.name?.toLowerCase();
                     return value;
                 });
@@ -69,6 +69,7 @@ const App: React.FC = () => {
                     setPlayerStats={setPlayerStats}
                     playerValuation={playerValuation}
                     setPlayerValuation={setPlayerValuation}
+                    setPlayerId={setOutputPlayer}
                 />
             </Suspense>
         </main>

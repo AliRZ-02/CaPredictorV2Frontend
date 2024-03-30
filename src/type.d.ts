@@ -62,6 +62,7 @@ interface PlayerProps {
     setPlayerValuation: React.Dispatch<
         React.SetStateAction<number | undefined | null>
     >;
+    setPlayerId: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
 type ApiDataType = {

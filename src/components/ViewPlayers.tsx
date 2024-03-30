@@ -37,6 +37,7 @@ const PlayerView: React.FC<Props> = (props) => {
     const setPlayer = props.setPlayer;
     const setPlayerStats = props.setPlayerStats;
     const setPlayerValuation = props.setPlayerValuation;
+    const setPlayerId = props.setPlayerId;
 
     const fetchPlayerInfo = (playerId: string): void => {
         getPlayerById(playerId)
@@ -46,11 +47,12 @@ const PlayerView: React.FC<Props> = (props) => {
                     8
                 ).then(({ data }) => {
                     setPlayerValuation(data[0].value);
-                });
+                }).catch();
                 setPlayer(playerObject);
                 setPlayerStats(playerStats);
             })
             .catch(() => {
+                setPlayerId(undefined);
                 setPlayerValuation(undefined);
                 setPlayerStats(undefined);
                 setPlayer(undefined);
@@ -176,8 +178,12 @@ const PlayerView: React.FC<Props> = (props) => {
             information: `${player?.birthInformation?.city}, ${player?.birthInformation?.country}`,
         },
         {
-            title: `Draft (${player?.historicalData?.year})`,
-            information: `Pick ${player?.historicalData?.pickInRound} ― Round ${player?.historicalData?.round}`,
+            title: player?.historicalData?.year 
+                ? `Draft (${player?.historicalData?.year})` 
+                : 'Draft',
+            information: player?.historicalData?.year 
+                ? `Pick ${player?.historicalData?.pickInRound} ― Round ${player?.historicalData?.round}` 
+                : 'Undrafted',
         },
     ];
 
