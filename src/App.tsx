@@ -47,7 +47,7 @@ const App: React.FC = () => {
             );
             setPlayer(null);
             setPlayerStats(null);
-            setPlayerValuation(null);
+            setPlayerValuation(undefined);
         }
         return undefined;
     };

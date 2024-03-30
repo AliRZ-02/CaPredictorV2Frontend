@@ -18,8 +18,8 @@ const StyledSearchbar = styled("div")(({ theme }) => ({
     top: 0,
     left: 0,
     zIndex: 0,
-    width: window.innerWidth > 500 
-        ? "25%" 
+    width: window.innerWidth > 500
+        ? "25%"
         : "50%",
     display: "flex",
     position: "absolute",
@@ -55,6 +55,12 @@ export default function Searchbar({ handler, buttonHandler }: SearchbarProps) {
         buttonHandler();
     };
 
+    const handleKeyDown = (event: React.KeyboardEvent) => {
+        if (event.key === "Enter") {
+            searchButton();
+        }
+    };
+
     const updateInputPlayer = (event: React.ChangeEvent<HTMLInputElement>) => {
         handler(event.target.value.toLowerCase());
     };
@@ -77,6 +83,7 @@ export default function Searchbar({ handler, buttonHandler }: SearchbarProps) {
                             placeholder="Search…"
                             style={{ color: "#EEEEEE" }}
                             onChange={updateInputPlayer}
+                            onKeyDown={handleKeyDown}
                             startAdornment={
                                 <InputAdornment position="start">
                                     <Iconify

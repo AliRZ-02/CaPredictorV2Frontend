@@ -9,4 +9,5 @@ Built with help using Material UI Templates & Tutorials.
 ```bash
 set -a && source .env && set +a
 ```
+
 or `env-cmd -f ./.env`

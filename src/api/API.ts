@@ -1,13 +1,9 @@
 import axios, { AxiosResponse } from "axios";
 
-import {
-    REACT_APP_BASE_URL,
-    REACT_APP_VALUATION_URL,
-} from "../settings";
+import { REACT_APP_BASE_URL, REACT_APP_VALUATION_URL } from "../settings";
 
 export const getPlayerById = async (
-    playerId: string,
-    retries = 1
+    playerId: string
 ): Promise<AxiosResponse<ApiDataType>> => {
     try {
         const playerData: AxiosResponse<ApiDataType> = await axios.get(
@@ -16,18 +12,15 @@ export const getPlayerById = async (
 
         return playerData;
     } catch (error) {
-        return retries !== 0
-            ? getPlayerById(playerId, retries - 1)
-            : ({
-                data: { error: String(error) },
-            } as AxiosResponse<ApiDataType>);
+        return {
+            data: { error: String(error) },
+        } as AxiosResponse<ApiDataType>;
     }
 };
 
 export const getPlayerValuation = async (
     playerName: string | undefined,
-    contractLength: number,
-    retries = 1
+    contractLength: number
 ): Promise<AxiosResponse<ValuationDataType[]>> => {
     try {
         if (typeof playerName !== "string") {
@@ -44,27 +37,23 @@ export const getPlayerValuation = async (
 
         return playerValuation;
     } catch (error) {
-        return retries !== 0
-            ? getPlayerValuation(playerName, contractLength, retries - 1)
-            : ({ data: [{ error: String(error) }] } as AxiosResponse<
-                  ValuationDataType[]
-              >);
+        return { data: [{ error: String(error) }] } as AxiosResponse<
+            ValuationDataType[]
+        >;
     }
 };
 
-export const getPlayerList = async (
-    retries = 1
-): Promise<AxiosResponse<PlayerListDataType[]>> => {
+export const getPlayerList = async (): Promise<
+    AxiosResponse<PlayerListDataType[]>
+> => {
     try {
         const playerList: AxiosResponse<PlayerListDataType[]> = await axios.get(
             `${REACT_APP_BASE_URL}/players`
         );
         return playerList;
     } catch (error) {
-        return retries !== 0
-            ? getPlayerList(retries - 1)
-            : ({ data: [{ error: String(error) }] } as AxiosResponse<
-                  PlayerListDataType[]
-              >);
+        return { data: [{ error: String(error) }] } as AxiosResponse<
+            PlayerListDataType[]
+        >;
     }
 };

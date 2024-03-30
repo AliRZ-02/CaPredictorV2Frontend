@@ -1,3 +1,4 @@
+import { Alert } from "@mui/material";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -42,12 +43,15 @@ const PlayerView: React.FC<Props> = (props) => {
     const fetchPlayerInfo = (playerId: string): void => {
         getPlayerById(playerId)
             .then(({ data: { playerObject, playerStats } }) => {
-                getPlayerValuation(
-                    playerObject?.playerDetails.playerName,
-                    8
-                ).then(({ data }) => {
-                    setPlayerValuation(data[0].value);
-                }).catch();
+                getPlayerValuation(playerObject?.playerDetails.playerName, 8)
+                    .then(({ data }) => {
+                        data[0].error
+                            ? setPlayerValuation(null)
+                            : setPlayerValuation(data[0].value);
+                    })
+                    .catch(() => {
+                        setPlayerValuation(null);
+                    });
                 setPlayer(playerObject);
                 setPlayerStats(playerStats);
             })
@@ -178,12 +182,12 @@ const PlayerView: React.FC<Props> = (props) => {
             information: `${player?.birthInformation?.city}, ${player?.birthInformation?.country}`,
         },
         {
-            title: player?.historicalData?.year 
-                ? `Draft (${player?.historicalData?.year})` 
-                : 'Draft',
-            information: player?.historicalData?.year 
-                ? `Pick ${player?.historicalData?.pickInRound} ― Round ${player?.historicalData?.round}` 
-                : 'Undrafted',
+            title: player?.historicalData?.year
+                ? `Draft (${player?.historicalData?.year})`
+                : "Draft",
+            information: player?.historicalData?.year
+                ? `Pick ${player?.historicalData?.pickInRound} ― Round ${player?.historicalData?.round}`
+                : "Undrafted",
         },
     ];
 
@@ -287,8 +291,8 @@ const PlayerView: React.FC<Props> = (props) => {
                     <Typography
                         variant="body2"
                         color="text.secondary"
-                        fontSize={`${window.innerWidth > 500 
-                            ? 200 
+                        fontSize={`${window.innerWidth > 500
+                            ? 200
                             : 125}%`}
                         alignContent={"center"}>
                         Search for a player to get started!
@@ -343,8 +347,10 @@ const PlayerView: React.FC<Props> = (props) => {
                                                 .replace(
                                                     /\B(?=(\d{3})+(?!\d))/g,
                                                     ","
-                                                )}`
-                                            : "Calculating 🤓 ..."
+                                                )} 🤯`
+                                            : playerValuation === undefined
+                                                ? "Calculating 🤓 ..."
+                                                : "Could not determine 😔"
                                     }`}
                                 />
                             </Grid>
@@ -354,6 +360,11 @@ const PlayerView: React.FC<Props> = (props) => {
                 <Grid item xs={12} md={9}>
                     <CardComponent>
                         <CardContent>
+                            <Grid textAlign={"center"} sx={{marginBottom: 2}}>
+                                <Alert severity="info">
+                                    These stats show the percentile rankings for the player
+                                </Alert>
+                            </Grid>
                             <Grid container spacing={1}>
                                 {PlayerStats()}
                             </Grid>
