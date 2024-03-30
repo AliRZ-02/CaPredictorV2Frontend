@@ -283,8 +283,16 @@ const PlayerView: React.FC<Props> = (props) => {
                     alignItems: "center",
                     justifyContent: "center",
                 }}>
-                <Grid item xs={12} md={12}>
-                    <h1>Search for a player to get started!</h1>
+                <Grid item xs={12} md={12} textAlign={"center"}>
+                    <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        fontSize={`${window.innerWidth > 500 
+                            ? 200 
+                            : 125}%`}
+                        alignContent={"center"}>
+                        Search for a player to get started!
+                    </Typography>
                     <Card>
                         <CardMedia
                             component="img"

@@ -18,7 +18,9 @@ const StyledSearchbar = styled("div")(({ theme }) => ({
     top: 0,
     left: 0,
     zIndex: 0,
-    width: "25%",
+    width: window.innerWidth > 500 
+        ? "25%" 
+        : "50%",
     display: "flex",
     position: "absolute",
     alignItems: "center",
